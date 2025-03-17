@@ -37,6 +37,7 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
             y -= 5;
         }
         
+        
         Rectangle getBounds() {
             return new Rectangle(x, y, WIDTH, HEIGHT);
         }
