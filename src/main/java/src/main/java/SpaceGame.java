@@ -6,6 +6,13 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * SpaceGame - Un gioco in stile Space Invaders
+ * Il giocatore controlla un cannone e deve distruggere tutte le astronavi nemiche
+ *
+ * @author Developer myInvaders
+ * @version 1.1
+ */
 public class SpaceGame extends JPanel implements ActionListener, KeyListener {
     private static final int GAME_WIDTH = 800;
     private static final int GAME_HEIGHT = 600;
@@ -23,43 +30,62 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
     private boolean leftPressed = false;
     private boolean rightPressed = false;
     
+    /**
+     * Classe interna che rappresenta un proiettile sparato dal cannone
+     * I proiettili si muovono verticalmente verso l'alto
+     */
     private static class Projectile {
         int x, y;
         static final int WIDTH = 4;
         static final int HEIGHT = 10;
-        
+
         Projectile(int x, int y) {
             this.x = x;
             this.y = y;
         }
-        
+
+        /**
+         * Muove il proiettile verso l'alto
+         */
         void move() {
             y -= 5;
         }
-        
-        
+
+        /**
+         * Ritorna il rettangolo di collisione del proiettile
+         */
         Rectangle getBounds() {
             return new Rectangle(x, y, WIDTH, HEIGHT);
         }
     }
     
+    /**
+     * Classe interna che rappresenta un'astronave nemica (UFO)
+     * Le astronavi si muovono orizzontalmente e scendono quando raggiungono i bordi
+     */
     private static class Spaceship {
         int x, y;
-        int direction = 1;
-        
+        int direction = 1;  // 1 = destra, -1 = sinistra
+
         Spaceship(int x, int y) {
             this.x = x;
             this.y = y;
         }
-        
+
+        /**
+         * Muove l'astronave orizzontalmente e la fa scendere ai bordi
+         */
         void move() {
             x += direction * 2;
             if (x <= 0 || x >= GAME_WIDTH - SPACESHIP_WIDTH) {
-                direction *= -1;
-                y += 20;
+                direction *= -1;  // Inverte la direzione
+                y += 20;          // Scende di un livello
             }
         }
-        
+
+        /**
+         * Ritorna il rettangolo di collisione dell'astronave
+         */
         Rectangle getBounds() {
             return new Rectangle(x, y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
